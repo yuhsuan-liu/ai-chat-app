@@ -1,33 +1,25 @@
 const express = require('express');
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
 const router = express.Router();
 
-// Setup OpenAI configuration with your secret API key
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Create an instance of the OpenAI API client
-const openai = new OpenAIApi(configuration);
-
-// POST endpoint to interact with ChatGPT
 router.post('/chat', async (req, res) => {
   const { message } = req.body;
 
   try {
-    const response = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: message,
-      max_tokens: 150,
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: message }],
     });
 
-    // Send back only the generated text
-    res.json({ reply: response.data.choices[0].text });
+    res.json({ reply: response.choices[0].message.content });
   } catch (error) {
-    // Send error response
+    console.error(error);
     res.status(500).send('Error communicating with ChatGPT');
   }
 });
 
-// Export the router for use in your main server file
 module.exports = router;
