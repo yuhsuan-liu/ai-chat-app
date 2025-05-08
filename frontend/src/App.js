@@ -1,3 +1,18 @@
+import React from 'react'
+import Chat from './components/chat';
+
+function App() {
+  return(
+    <div>
+      <h1>AI Chat App</h1>
+      <Chat/>
+    </div>
+  );
+}
+
+export default App;
+
+/*
 import logo from './logo.svg';
 import './App.css';
 
@@ -23,3 +38,4 @@ function App() {
 }
 
 export default App;
+*/
