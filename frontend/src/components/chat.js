@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { jsPDF} from 'jspdf';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
@@ -30,6 +31,21 @@ const Chat = () => {
     setChat([])
   };
 
+//function to export chat history into PDF files
+const downloadPDF = () => {
+  const doc = new jsPDF();
+  const leftMargin = 20;
+  const topMargin = 20;
+  const lineHeight = 10;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const textWidth = pageWidth - leftMargin * 2;
+  chat.forEach((entry,i) => {
+    doc.text(`${entry.user}:${entry.text}`,10, 10 + i * 15);
+  });
+  doc.save('chat-history.pdf');
+  };
+
+
   return (
     <div>
       <div>
@@ -48,8 +64,10 @@ const Chat = () => {
       />
       <button onClick={sendMessage}>Send</button>
       <button onClick={clearChat} style={{marginLeft: '10px'}}>Clear</button>
+      <button onClick={downloadPDF} style={{ marginLeft: '10px'}}>Download PDF</button>
     </div>
   );
 };
 
 export default Chat;
+
