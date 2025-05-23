@@ -25,6 +25,11 @@ const Chat = () => {
     }
   };
 
+//function to clear chatting history
+  const clearChat = () => {
+    setChat([])
+  };
+
   return (
     <div>
       <div>
@@ -42,6 +47,7 @@ const Chat = () => {
         placeholder="Type your message..."
       />
       <button onClick={sendMessage}>Send</button>
+      <button onClick={clearChat} style={{marginLeft: '10px'}}>Clear</button>
     </div>
   );
 };
