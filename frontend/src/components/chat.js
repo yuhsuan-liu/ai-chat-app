@@ -40,17 +40,17 @@ const downloadPDF = () => {
   const pageWidth = doc.internal.pageSize.getWidth();
   const textWidth = pageWidth - leftMargin * 2;
   chat.forEach((entry,i) => {
-    doc.text(`${entry.user}:${entry.text}`,10, 10 + i * 15);
+    doc.text(`${entry.user}:${entry.text}`,leftMargin, topMargin + i * lineHeight);
   });
   doc.save('chat-history.pdf');
   };
 
 
   return (
-    <div>
+    <div style={{ padding: '24px', maxWidth: '600px', margin: '0 auto' }}>
       <div>
         {chat.map((entry, index) => (
-          <div key={index}>
+          <div key={index} style={{ marginBottom: '10px' }}>
             <strong>{entry.user}:</strong> {entry.text}
           </div>
         ))}
@@ -61,10 +61,13 @@ const downloadPDF = () => {
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
         placeholder="Type your message..."
+        style={{ width: '100%', padding: '8px', marginTop: '10px' }}
       />
-      <button onClick={sendMessage}>Send</button>
-      <button onClick={clearChat} style={{marginLeft: '10px'}}>Clear</button>
-      <button onClick={downloadPDF} style={{ marginLeft: '10px'}}>Download PDF</button>
+      <div style={{ marginTop: '10px' }}>
+        <button onClick={sendMessage}>Send</button>
+        <button onClick={clearChat} style={{marginLeft: '10px'}}>Clear</button>
+        <button onClick={downloadPDF} style={{ marginLeft: '10px'}}>Download PDF</button>
+      </div>
     </div>
   );
 };
