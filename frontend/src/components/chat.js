@@ -12,7 +12,7 @@ const Chat = () => {
       setMessage('');
 
       try {
-        const response = await axios.post('http://localhost:5000/api/chat', {
+        const response = await axios.post('https://ai-chat-app-rkz1.onrender.com/api/chat', {
           message,
         });
 
